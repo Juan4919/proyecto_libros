@@ -1,3 +1,5 @@
+<?php include 'php/conexion.php'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,10 +9,11 @@
     <title>Lista de libro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <nav class="navbar bg-success navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="lista-libros.html">
                 <img src="img/libro.png" alt="Logo" width="30" height="30">
@@ -45,7 +48,11 @@
         <h1>Listado de libros</h1>
     </div>
     <div class="container">
+        <?php
+        $resultado = mysqli_query($conexion, "SELECT libro.*, genero.nombre AS nombre_genero FROM libro JOIN genero ON libro.genero_id = genero.id");
+        ?>
         <table class="table">
+
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -56,20 +63,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Harry Potter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Fantasía</td>
-                    <td>Salvat</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>The lord of the Rings</td>
-                    <td>J.R.R. Tolkien</td>
-                    <td>Fantasía</td>
-                    <td>Minotauro ediciones</td>
-                </tr>
+                <?php
+                $i = 1;
+                while ($fila = mysqli_fetch_assoc($resultado)) {
+                    echo "<tr>";
+                    echo "<th scope='row'>" . $i . "</th>";
+                    echo "<td>" . $fila['titulo'] . "</td>";
+                    echo "<td>" . $fila['autor'] . "</td>";
+                    echo "<td>" . $fila['nombre_genero'] . "</td>";
+                    echo "<td>" . $fila['editorial'] . "</td>";
+                    echo "</tr>";
+                    $i++;
+                }
+                ?>
             </tbody>
         </table>
         <div class="container text-center my-5">

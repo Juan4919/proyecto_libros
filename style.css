@@ -1,0 +1,94 @@
+  :root {
+      --color-primary: #5C3D2E;
+      --color-secondary: #D4A853;
+      --color-fondo: #FDF6EC;
+  }
+
+  .navbar {
+      background-color: var(--color-primary) !important;
+  }
+
+  .nav-link {
+      color: var(--color-secondary) !important;
+      font-weight: bold;
+  }
+
+  .nav-link:hover {
+      color: white !important;
+  }
+
+  .dropdown-menu {
+      background-color: var(--color-primary);
+      border: none;
+  }
+
+  .dropdown-item {
+      color: var(--color-secondary);
+      font-weight: bold;
+  }
+
+  .dropdown-item:hover {
+      background-color: var(--color-secondary);
+      color: var(--color-primary);
+  }
+
+  .navbar-brand {
+      color: var(--color-secondary) !important;
+      font-size: 1.4rem;
+  }
+
+  table {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  thead {
+      background-color: var(--color-primary);
+      color: var(--color-secondary);
+  }
+
+  tbody tr:hover {
+      background-color: #fef3e2;
+  }
+
+  .btn-success {
+      background-color: var(--color-secondary) !important;
+      border-color: var(--color-secondary) !important;
+      color: var(--color-primary) !important;
+      font-weight: bold;
+  }
+
+  body {
+      background-color: var(--color-fondo);
+      font-family: 'Georgia', serif;
+  }
+
+  h1 {
+      color: var(--color-primary);
+      font-weight: bold;
+  }
+
+  .form-libro {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+      color: var(--color-primary);
+      font-weight: bold;
+  }
+
+  .form-control,
+  .form-select {
+      border-color: var(--color-secondary);
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 0.2rem rgba(92, 61, 46, 0.25);
+  }
