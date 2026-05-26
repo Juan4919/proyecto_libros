@@ -1,0 +1,59 @@
+services:
+  php-app:
+    networks:
+      - app-network
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./mi-codigo:/var/www/html
+    environment:
+      APP_DB_HOST: ${APP_DB_HOST}
+      APP_DB_NAME: ${APP_DB_NAME}
+      APP_DB_USER: ${APP_DB_USER}
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD}
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+
+  mysql-db:
+    image: mysql:${MYSQL_VERSION}
+    networks:
+      - app-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - datos_mysql:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    command: 
+      - --character-set-server=utf8mb4 
+      - --collation-server=utf8mb4_unicode_ci
+
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u${MYSQL_USER} -p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  adminer:
+    image: adminer:${ADMINER_VERSION}
+    networks:
+      - app-network
+    ports:
+      - "${ADMINER_PORT}:8080"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+
+volumes:
+  datos_mysql:
+
+networks:
+  app-network:
+    driver: bridge
